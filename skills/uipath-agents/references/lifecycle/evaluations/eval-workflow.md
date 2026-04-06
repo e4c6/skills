@@ -109,24 +109,44 @@ uip agent eval add "straightforward case" \
 
 ## Step 2 — Design Custom Evaluators
 
-### Evaluator Types
+### Evaluator Availability
 
-Both agent types share evaluator concepts. Low-code agents define them in `Agent/evals/evaluators/*.json`. Coded agents define them in `evaluations/evaluators/*.json`.
+**Low-code agents** support only the **legacy evaluator types** (defined in `Agent/evals/evaluators/*.json`):
 
-| Type | Low-Code (type field) | Coded (evaluatorTypeId) | Use Case |
-|------|----------------------|------------------------|----------|
-| LLM Judge | 5 | `uipath-llm-judge-output-semantic-similarity` | Semantic comparison |
-| Exact Match | 6 | `uipath-exact-match` | Deterministic field comparison |
-| Trajectory | 7 | `uipath-llm-judge-trajectory-similarity` | Agent reasoning and tool usage |
-| JSON Similarity | — | `uipath-json-similarity` | Structured data comparison |
-| Contains | — | `uipath-contains` | Substring search |
-| Classification | — | `uipath-multiclass-classification` | Label validation |
+| Type | type field | Description |
+|------|-----------|-------------|
+| LLM Judge (Output) | 5 | LLM-powered semantic comparison of expected vs actual output |
+| Exact Match | 6 | Deterministic single-field comparison |
+| Trajectory | 7 | LLM-powered evaluation of agent reasoning, tool usage, and behavior |
 
-See [evaluators.md](evaluators.md) for the full evaluator reference including all built-in evaluator types.
+These are configured via JSON files with a `prompt` field and use `{{ExpectedOutput}}`, `{{ActualOutput}}`, `{{AgentRunHistory}}`, `{{ExpectedAgentBehavior}}` placeholders.
+
+**Coded agents** support **all evaluator types** (defined in `evaluations/evaluators/*.json`), including everything above plus:
+
+| evaluatorTypeId | Description |
+|----------------|-------------|
+| `uipath-exact-match` | Strict string comparison (binary) |
+| `uipath-contains` | Substring search (binary) |
+| `uipath-json-similarity` | Tree-based JSON comparison (continuous) |
+| `uipath-llm-judge-output-semantic-similarity` | LLM semantic similarity (continuous) |
+| `uipath-llm-judge-output-strict-json-similarity` | Per-key JSON matching with LLM penalties |
+| `uipath-llm-judge-trajectory-similarity` | LLM execution path analysis |
+| `uipath-llm-judge-trajectory-simulation` | LLM simulation-based trajectory eval |
+| `uipath-binary-classification` | Binary classification metrics (precision/recall/f-score) |
+| `uipath-multiclass-classification` | Multiclass classification metrics |
+| `uipath-tool-call-order` | Validates tool call sequence |
+| `uipath-tool-call-args` | Validates tool call arguments |
+| `uipath-tool-call-count` | Validates tool call counts |
+| `uipath-tool-call-output` | Validates tool call outputs |
+| Custom Python evaluators | Write your own evaluator class in Python |
+
+See [evaluators.md](evaluators.md) for the full evaluator reference.
 
 ### Custom Evaluator Patterns
 
-These patterns work for both agent types. Low-code agents use the `prompt` field in the evaluator JSON. Coded agents can use LLM Judge evaluators with custom prompts or write Python evaluators (see [evaluators.md](evaluators.md#custom-evaluators)).
+**Low-code agents** customize evaluators via the `prompt` field in the legacy evaluator JSON — this is the primary mechanism for domain-specific scoring. The patterns below all use this approach.
+
+**Coded agents** can use any of the above built-in evaluators, LLM Judge evaluators with custom prompts, OR write custom Python evaluators (see [evaluators.md](evaluators.md#custom-evaluators)).
 
 #### Binary Pass/Fail
 
@@ -243,9 +263,9 @@ Evaluators run concurrently with the agent. Use a **different, faster model** to
 
 ### Wiring Evaluators
 
-**Low-code:** Add evaluator IDs to the eval set's `evaluatorRefs` array.
+**Low-code:** Add evaluator IDs to the eval set's `evaluatorRefs` array. Only legacy evaluator types (LLM Judge type 5, Exact Match type 6, Trajectory type 7) are supported.
 
-**Coded:** Reference evaluator config files in the eval set JSON under `evaluators`.
+**Coded:** Reference evaluator config files in the eval set JSON under `evaluators`. All built-in evaluator types are available, plus custom Python evaluators.
 
 ---
 
