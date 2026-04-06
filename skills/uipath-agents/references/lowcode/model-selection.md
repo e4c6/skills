@@ -43,8 +43,8 @@ Best for: structured tasks with clear rules, high-volume processing, simple Q&A.
 | Model | Provider | Context | Strengths |
 |-------|----------|---------|-----------|
 | `gpt-5.4-mini-2026-03-17` | OpenAI | 128K out | Latest mini, fast, great structured output |
-| `gpt-4.1-mini-2025-04-14` | OpenAI | 1M in / 32K out | Large context, good for document processing |
-| `gemini-2.5-flash` | Vertex AI | 1M in / 65K out | Fastest, lowest cost, massive context |
+| `gpt-5-mini-2025-08-07` | OpenAI | 272K in / 128K out | Fast GPT-5 class, large context |
+| `gemini-3-flash-preview` | Vertex AI | 1M in / 64K out | Latest Gemini flash, fastest, lowest cost |
 | `anthropic.claude-haiku-4-5-20251001-v1:0` | AWS Bedrock | 64K out | Fast Anthropic option |
 
 ### Tier 2 — Balanced (tool-using agents, RAG, multi-step reasoning)
@@ -53,10 +53,10 @@ Best for: agents that call tools, search indexes, or need moderate reasoning.
 
 | Model | Provider | Context | Strengths |
 |-------|----------|---------|-----------|
-| `gpt-4.1-2025-04-14` | OpenAI | 1M in / 32K out | Strong reasoning, 1M context, reliable tool use |
 | `gpt-5.4` | OpenAI | 128K out | Latest full-size GPT, strong all-around |
+| `gpt-5.2-2025-12-11` | OpenAI | 400K in / 128K out | Large context, strong reasoning |
 | `anthropic.claude-sonnet-4-6` | AWS Bedrock | 64K out | Great reasoning, good tool use |
-| `gemini-2.5-pro` | Vertex AI | 1M in / 65K out | Strong reasoning with massive context |
+| `gemini-3.1-pro-preview` | Vertex AI | 1M in / 64K out | Latest Gemini pro, strong reasoning with massive context |
 
 ### Tier 3 — Maximum Quality (complex reasoning, ambiguous inputs, critical decisions)
 
@@ -73,12 +73,12 @@ Best for: agents handling ambiguous inputs where accuracy matters more than spee
 
 | Task | Recommended Tier | Example Models |
 |------|-----------------|----------------|
-| Document classification | Tier 1 | gpt-5.4-mini, gpt-4.1-mini |
-| Structured data extraction | Tier 1 | gpt-4.1-mini, gemini-2.5-flash |
-| Customer support / Q&A | Tier 2 | gpt-4.1, claude-sonnet-4-6 |
-| Tool-using agent (RAG, search, APIs) | Tier 2-3 | gpt-4.1, claude-opus |
+| Document classification | Tier 1 | gpt-5.4-mini, gemini-3-flash |
+| Structured data extraction | Tier 1 | gpt-5.4-mini, gpt-5-mini |
+| Customer support / Q&A | Tier 2 | gpt-5.4, claude-sonnet-4-6 |
+| Tool-using agent (RAG, search, APIs) | Tier 2-3 | gpt-5.4, claude-opus |
 | Multi-step reasoning with ambiguity | Tier 3 | claude-opus, gpt-5.4 |
-| High-volume batch processing | Tier 1 | gemini-2.5-flash, gpt-5.4-mini |
+| High-volume batch processing | Tier 1 | gemini-3-flash, gpt-5.4-mini |
 
 ---
 
@@ -88,10 +88,10 @@ Evaluators run concurrently with the agent. If both use the same model or provid
 
 | Agent Model | Evaluator Model |
 |-------------|-----------------|
-| claude-opus | gpt-5.4-mini or gpt-4.1 |
+| claude-opus | gpt-5.4-mini or gpt-5-mini |
 | gpt-5.4 | gpt-5.4-mini (different rate limit pool) |
-| gpt-4.1 | gpt-5.4-mini |
-| gemini-2.5-pro | gpt-5.4-mini |
+| claude-sonnet | gpt-5.4-mini |
+| gemini-3.1-pro | gpt-5.4-mini |
 
 Never use `same-as-agent` for evaluator models — this causes rate limit conflicts.
 
@@ -101,4 +101,4 @@ Never use `same-as-agent` for evaluator models — this causes rate limit confli
 
 Models available depend on your tenant's governance policy. If `uip agent config list-models` doesn't show a model you expect, contact your tenant admin.
 
-Common gotcha: bare model names like `gpt-4o` may be blocked by governance while date-suffixed versions like `gpt-4o-2024-11-20` are allowed. Always use the exact name from `list-models` output.
+Common gotcha: bare model names like `gpt-4o` may be blocked by governance while date-suffixed versions are allowed. Always use the exact name from `list-models` output.
