@@ -213,35 +213,57 @@ The entrypoint for low-code agents is **always `agent.json`**. Input fields must
 
 Read [lifecycle/running-agents.md](references/lifecycle/running-agents.md).
 
-### A5 — Add Evaluations
+### A5 — Select Model
 
-Add test cases using the CLI:
+List available models (filtered by tenant governance policy):
 ```bash
+uip agent config list-models
+```
+
+Change model:
+```bash
+uip agent config set model "gpt-4.1-2025-04-14" --path ./my-agent
+```
+
+Read [lowcode/model-selection.md](references/lowcode/model-selection.md) for recommendations by use case.
+
+### A6 — Add Evaluations and Run
+
+Add test cases, create custom evaluators, run evals, and iterate:
+```bash
+# Add a test case
 uip agent eval add "password-reset-question" \
   --set "Default Evaluation Set" \
   --inputs '{"input": "How do I reset my corporate email password?"}' \
   --expected '{"content": "Visit sso.corp.com/reset or contact IT helpdesk."}' \
+  --expected-agent-behavior "Should provide the SSO reset URL and helpdesk as fallback" \
   --path ./my-agent
+
+# Run and wait for results
+uip agent eval run start --set "Default Evaluation Set" \
+  --solution-id <solutionId> --path ./my-agent --wait
+
+# Analyze failures with evaluator justifications
+uip agent eval run results <runId> --set "Default Evaluation Set" \
+  --only-failed --verbose --path ./my-agent
+
+# Compare before/after prompt changes
+uip agent eval run compare <runIdA> --compare-to <runIdB> \
+  --set "Default Evaluation Set" --path ./my-agent
 ```
 
-Then run evaluations locally:
-```bash
-uip codedagents eval agent.json evaluations/eval-sets/smoke-test.json --no-report
-```
+Read the complete eval workflow: [lowcode/eval-workflow.md](references/lowcode/eval-workflow.md).
+For coded agent evals: [lifecycle/evaluate.md](references/lifecycle/evaluate.md) and [evaluators reference](references/lifecycle/evaluations/evaluators.md).
 
-Add `--report` (and ensure `UIPATH_PROJECT_ID` is set in `.env`) to publish results to Studio Web.
-
-Read [lifecycle/evaluate.md](references/lifecycle/evaluate.md) and the [evaluators reference](references/lifecycle/evaluations/evaluators.md).
-
-### A6 — Push to Studio Web
+### A7 — Push to Studio Web
 
 ```bash
 uip agent push ./my-agent --name "My Agent v1" --skip-schema-validation
 ```
 
-This imports the project into Studio Web for visual editing, sharing, and collaboration. Use `--overwrite <solutionId>` to update an existing project.
+This imports the project into Studio Web for visual editing, sharing, and collaboration. Use `--overwrite <solutionId>` to update an existing project in place.
 
-### A7 — Publish and Deploy
+### A8 — Publish and Deploy
 
 ```bash
 # Publish (pack + upload to AutomationSolutions):
