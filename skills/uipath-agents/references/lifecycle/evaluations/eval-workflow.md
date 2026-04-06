@@ -118,6 +118,7 @@ uip agent eval add "straightforward case" \
 | LLM Judge (Output) | 5 | LLM-powered semantic comparison of expected vs actual output |
 | Exact Match | 6 | Deterministic single-field comparison |
 | Trajectory | 7 | LLM-powered evaluation of agent reasoning, tool usage, and behavior |
+| JSON Similarity | 8 | Tree-based JSON comparison (continuous scoring) |
 
 These are configured via JSON files with a `prompt` field and use `{{ExpectedOutput}}`, `{{ActualOutput}}`, `{{AgentRunHistory}}`, `{{ExpectedAgentBehavior}}` placeholders.
 
@@ -263,7 +264,7 @@ Evaluators run concurrently with the agent. Use a **different, faster model** to
 
 ### Wiring Evaluators
 
-**Low-code:** Add evaluator IDs to the eval set's `evaluatorRefs` array. Only legacy evaluator types (LLM Judge type 5, Exact Match type 6, Trajectory type 7) are supported.
+**Low-code:** Add evaluator IDs to the eval set's `evaluatorRefs` array. Only legacy evaluator types (LLM Judge type 5, Exact Match type 6, Trajectory type 7, JSON Similarity type 8) are supported.
 
 **Coded:** Reference evaluator config files in the eval set JSON under `evaluators`. All built-in evaluator types are available, plus custom Python evaluators.
 
