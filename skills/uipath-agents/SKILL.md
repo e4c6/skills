@@ -252,8 +252,8 @@ uip agent eval run compare <runIdA> --compare-to <runIdB> \
   --set "Default Evaluation Set" --path ./my-agent
 ```
 
-Read the complete eval workflow: [lowcode/eval-workflow.md](references/lowcode/eval-workflow.md).
-For coded agent evals: [lifecycle/evaluate.md](references/lifecycle/evaluate.md) and [evaluators reference](references/lifecycle/evaluations/evaluators.md).
+Read the complete eval workflow (both agent types): [evaluations/eval-workflow.md](references/lifecycle/evaluations/eval-workflow.md).
+Evaluators reference: [evaluations/evaluators.md](references/lifecycle/evaluations/evaluators.md).
 
 ### A7 — Push to Studio Web
 
