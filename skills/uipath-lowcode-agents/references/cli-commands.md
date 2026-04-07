@@ -16,13 +16,42 @@ Run from the solution directory. Creates agent.json, entry-points.json, project.
 
 ### `uip lowcodeagents validate`
 
-Validate agent project structure and schemas.
+Validate agent project structure and schema, then migrate all project files to the latest schema version.
 
 ```bash
 uip lowcodeagents validate --output json
 ```
 
-Run from the agent project directory. Checks schema validity and consistency between agent.json and entry-points.json. Run after every change.
+Run from the agent project directory. Run after every bulk of agent edits.
+
+**What it does:**
+1. If `metadata.storageVersion` is newer than what this uipcli installation supports → returns an error and instructs you to upgrade uipcli.
+2. Assembles the full on-disk filesystem tree (agent.json, flow-layout.json, evals/, features/, resources/) and runs the complete migration chain — the same pipeline Studio Web uses on import.
+3. Validates agent.json, eval-set files, and evaluator shapes after migration. Returns a JSON array of errors if any check fails.
+4. On success, writes all migrated files back to disk with updated `storageVersion`.
+
+**Flags:**
+
+| Flag | Effect |
+|------|--------|
+| *(none)* | Full structural + schema validation + migration |
+| `--schema-only` | Skip structural checks; run schema validation + migration only |
+| `--no-schema` | Skip schema validation and migration; run structural checks only |
+
+**Success output (no migration needed):**
+```json
+{ "Result": "Success", "Code": "AgentValidate", "Data": { "Status": "Valid", "MigrationApplied": false, ... } }
+```
+
+**Success output (migration applied):**
+```json
+{ "Result": "Success", "Code": "AgentValidate", "Data": { "Status": "Valid — migrated to 49.0.0", "MigrationApplied": true, "MigratedFiles": 3, ... } }
+```
+
+**Failure output:**
+```json
+{ "Result": "Failure", "Code": "AgentValidate", "Message": "Agent project validation failed", "Errors": ["Agent/agent.json → settings.model: Required"] }
+```
 
 ## Solution Commands
 
@@ -140,7 +169,7 @@ uip solution deploy run \
 | Create solution | `uip solution new "<NAME>" --output json` | Any directory |
 | Scaffold agent | `uip lowcodeagents init "<NAME>" --output json` | Solution directory |
 | Register project | `uip solution project add --project-path "<PATH>" --output json` | Solution directory |
-| Validate | `uip lowcodeagents validate --output json` | Agent project directory |
+| Validate + migrate | `uip lowcodeagents validate --output json` | Agent project directory |
 | Bundle for Studio Web | `uip solution bundle . -d ./dist --output json` | Solution directory |
 | Upload to Studio Web | `uip solution upload --output json` | Solution directory |
 | Pack | `uip solution pack . ./dist -v "1.0.0" --output json` | Solution directory |

@@ -37,7 +37,7 @@ metadata:
 
 1. **Edit JSON files directly** — the CLI supports `init` (scaffold) and `validate` (check). All configuration is done by editing `agent.json` and `entry-points.json`. Resources (tools, contexts, escalations) are added by editing the `resources[]` array in `agent.json`.
 
-2. **Validate after every change** — run `uip lowcodeagents validate --output json` after each edit. Do not batch multiple edits before validating.
+2. **Validate after every bulk of edits** — run `uip lowcodeagents validate --output json` after completing a set of related changes. Validate does two things: (1) checks schema correctness and returns a JSON `Errors` array on failure, (2) migrates all project files to the latest schema version and writes them back to disk on success.
 
 3. **Use `--output json`** on all `uip` commands when parsing output.
 
@@ -59,7 +59,7 @@ metadata:
 
 12. **Agent tools have `"location": "solution"` or `"location": "external"`.** Solution agents use `"location": "solution"` and `"folderPath": "solution_folder"`. External agents use `"location": "external"` and their actual folder path.
 
-13. **The `storageVersion` field in `agent.json` is never manually edited.** Managed by Studio Web and the packager. Current value is `50.0.0`.
+13. **Never manually edit `storageVersion`.** It is managed by `uip lowcodeagents validate` (which migrates files to the latest version on success) and by Studio Web on import. If validate reports that `storageVersion` is newer than supported, upgrade uipcli rather than editing the field by hand.
 
 14. **There are 5 agent-in-flow patterns.** `uipath.agent.autonomous` = inline (P1). `uipath.core.agent.<guid>` with `section: "In this solution"` = solution agent (P2). `uipath.core.agent.<guid>` with `section: "Published"` = external agent (P3). `uipath.agent.resource.tool.agent.<guid>` with `section: "Published"` = external agent tool (P4). `uipath.agent.resource.tool.agent.<guid>` with `section: "In this solution"` = solution agent tool (P5). P4 and P5 only connect to an inline agent's `tool` handle — never to the main flow sequence.
 
