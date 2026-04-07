@@ -28,7 +28,7 @@ What to look for:
 ## Investigation
 
 1. Get the faulted job details: `uip or jobs get <job-key> --output json`. Note `type`, error message, machine name, start/end time.
-2. Check `requiresUserInteraction` — this field is NOT available via the `uip` CLI (not on jobs, processes, or releases). Ask the user to check it in the Orchestrator UI: Processes → select the process → Settings → "Requires User Interaction".
+2. Check `requiresUserInteraction` — this field is NOT available via the `uip` CLI (not on jobs, processes, or releases). It is only visible in the Orchestrator UI: Processes → select the process → Settings → "Requires User Interaction".
 3. Check recent job history on the same machine: `uip or jobs list --folder-path '<folder>' --top 20 --output json`. Compare error messages — if other recent jobs on the same machine either succeeded or failed with different (non-logon) errors, credentials are likely correct — investigate session configuration instead.
 4. **If `requiresUserInteraction` is true:** check whether the user was logged into the machine at the time of the failure, and what the "Login to Console" setting is (Orchestrator → Tenant → Users → select user → Access Rules → Advanced Robot Options). This setting is only visible in the Orchestrator UI — not queryable via CLI.
    - If not logged in AND Login to Console = false → session configuration mismatch (root cause)
