@@ -397,6 +397,7 @@ For Orchestrator deployment when explicitly requested, see [references/flow-comm
 | **Create a subflow** | [references/node-reference.md — Subflow](references/node-reference.md) + Common Edits |
 | **Add a delay or scheduled trigger** | [references/node-reference.md](references/node-reference.md) |
 | **Use queue nodes** | [references/orchestration-guide.md — Queue Integration](references/orchestration-guide.md) |
+| **Add a Human-in-the-Loop node** | [references/flow-hitl.md](references/flow-hitl.md) + [/uipath:uipath-human-in-the-loop](/uipath:uipath-human-in-the-loop) |
 
 ## Key Concepts
 
@@ -442,4 +443,5 @@ When you finish building or editing a flow, report to the user:
 - **[Orchestration Guide](references/orchestration-guide.md)** — How to orchestrate RPA processes, agents, apps, other flows, and API workflows. Includes resource node types, "create new" workflow, queue integration, and human task patterns
 - **[Node Reference](references/node-reference.md)** — Complete catalog of OOTB nodes not in the planning guide: data transforms, delay, subflow, scheduled trigger, queue nodes
 - **[IS Activity Nodes](references/nodes/is-activity.md)** — Complete guide for IS connector activity nodes: connection binding, enriched metadata, reference resolution, `bindings_v2.json` schema, IS CLI commands, and debugging. See [contribution template](references/nodes/_contribution-template.md) for adding new node category guides
+- **[HITL Node Reference](references/flow-hitl.md)** — Human-in-the-Loop node schema design, CLI options, edge wiring, runtime variables, and approval/escalation patterns. For the full HITL authoring workflow, use the `uipath-human-in-the-loop` skill.
 - **[Pack / Publish / Deploy](/uipath:uipath-platform)** — Orchestrator deployment only when explicitly requested (uipath-platform skill). Default publish path is Studio Web via `solution bundle` + `solution upload` (Step 9).
