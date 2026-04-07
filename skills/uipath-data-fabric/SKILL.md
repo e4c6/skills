@@ -1,6 +1,6 @@
 ---
 name: uipath-data-fabric
-description: "Build and manage UiPath Data Fabric entities and records via the CLI. TRIGGER when: user asks to create a Data Fabric entity, insert/query/update/delete records, import data from CSV, upload/download files on records, or mentions 'Data Fabric', 'data service', 'uip df'. DO NOT TRIGGER when: user is asking about Orchestrator assets, Integration Service connectors, or general database operations unrelated to UiPath Data Fabric. DO NOT TRIGGER for federated entity creation or external connection setup — not supported."
+description: "Manage UiPath Data Fabric entities and records via CLI. Use when: create entity, CRUD records, CSV import, file attachments, or user mentions 'Data Fabric'/'uip df'. Skip for Orchestrator assets, Integration Service connectors, or federated entities."
 user-invokable: true
 ---
 
