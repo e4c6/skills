@@ -190,12 +190,14 @@ Before editing the `.flow` file, check what nodes are available:
 
 ```bash
 uip flow registry pull                          # refresh local cache (expires after 30 min)
-uip flow registry list --output json            # list all cached node types
-uip flow registry search <keyword>              # search by name, tag, or category
+uip flow registry search <keyword>              # search by name, tag, or category (preferred)
 uip flow registry search agent
+uip flow registry list --output json            # list first 20 cached nodes (use --limit -1 for all)
 ```
 
 > **Auth note**: Without `uip login`, registry shows OOTB nodes only. After login, tenant-specific connector nodes are also available.
+
+> **List vs. Search**: Prefer `registry search` over `registry list`. The `list` command defaults to showing only the first 20 nodes (use `--limit -1` to get everything). For targeted discovery, use `search` with a keyword — it's faster and more readable than browsing a huge list.
 
 At this point you know **which node types** to use. For OOTB nodes (scripts, HTTP, branching), you can call `registry get` immediately. For connector nodes, do **not** run `registry get` yet — proceed to Step 4 first.
 
