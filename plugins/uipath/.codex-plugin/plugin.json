@@ -26,7 +26,7 @@
     "troubleshoot"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "mcpServers": "./.codex-plugin/.mcp.json",
   "interface": {
     "displayName": "UiPath",
     "shortDescription": "Build and operate UiPath automations with Codex",
@@ -46,7 +46,7 @@
       "Inspect this repository for UiPath automation, agent, coded app, or solution work."
     ],
     "brandColor": "#FA4616",
-    "composerIcon": "./assets/uipath-icon.png",
-    "logo": "./assets/uipath-icon.png"
+    "composerIcon": "./.codex-plugin/assets/uipath-icon.png",
+    "logo": "./.codex-plugin/assets/uipath-icon.png"
   }
 }
