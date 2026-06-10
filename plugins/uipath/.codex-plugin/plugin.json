@@ -46,7 +46,7 @@
       "Inspect this repository for UiPath automation, agent, coded app, or solution work."
     ],
     "brandColor": "#FA4616",
-    "composerIcon": "./assets/uipath-icon.svg",
-    "logo": "./assets/uipath-icon.svg"
+    "composerIcon": "./assets/uipath-icon.png",
+    "logo": "./assets/uipath-icon.png"
   }
 }
