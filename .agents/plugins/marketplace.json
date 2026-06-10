@@ -1,0 +1,20 @@
+{
+  "name": "uipath-codex",
+  "interface": {
+    "displayName": "UiPath Codex"
+  },
+  "plugins": [
+    {
+      "name": "uipath",
+      "source": {
+        "source": "local",
+        "path": "./plugins/uipath"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
