@@ -45,6 +45,8 @@
       "Build, validate, or deploy a UiPath automation with the right UiPath skill and uip CLI workflow.",
       "Inspect this repository for UiPath automation, agent, coded app, or solution work."
     ],
-    "brandColor": "#FA4616"
+    "brandColor": "#FA4616",
+    "composerIcon": "./assets/uipath-icon.svg",
+    "logo": "./assets/uipath-icon.svg"
   }
 }

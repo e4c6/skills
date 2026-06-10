@@ -1,16 +1,12 @@
 # UiPath Codex Marketplace Bundle
 
-Generated Codex marketplace bundle for testing UiPath skills installation in Codex App/CLI.
+Generated Codex marketplace bundle for UiPath skills.
 
-Use this branch as a marketplace source:
-
-- Source: `e4c6/skills`
-- Git ref: `codex-marketplace`
-- Sparse paths:
+Use this directory or a branch containing this directory shape as a Codex marketplace source. For Git-backed installs, sparse checkout these paths:
 
 ```text
 .agents/plugins
 plugins/uipath
 ```
 
-This branch is generated from the canonical UiPath skills tree. Do not edit copied skill files here by hand.
+Do not edit copied skill files here by hand. Regenerate from the canonical repository root instead.
