@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "uipath-cli": {
+    "uip-cli": {
       "command": "npx",
       "args": [
         "-y",
