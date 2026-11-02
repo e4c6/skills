@@ -91,6 +91,8 @@ The node schema uses `fields[]` entries inside `inputs.schema`. Use these concep
 
 **Supported field types:** `string`, `number`, `boolean`, `date`, `file`
 
+> **Display-only dates go in a `string` field.** An `input` field of type `date` bound to a date-only value (`<YYYY-MM-DD>`) stops the Action Center task page from opening: "An unexpected error has occured. Please try again later (Invalid time value)". Keep `date` for dates the reviewer enters.
+
 **Design rules:**
 - Input fields: everything the human needs to decide — IDs, amounts, context; bind to upstream node output via `binding`
 - Output fields: only what downstream nodes actually use; set `required: true` for mandatory outputs
@@ -184,6 +186,12 @@ The node schema uses `fields[]` entries inside `inputs.schema`. Use these concep
 **Required fields:** `id`, `type`, `typeVersion`. Position goes in the top-level `layout.nodes` object (keyed by node id), not on the node itself.
 
 **Node ID rule:** camelCase from the label, strip non-alphanumeric, append `1` (increment to `2`, `3`... until unique among existing node IDs). Example: `"Invoice Review"` → `invoiceReview1`.
+
+**Group assignees need a check after the first run.** Neither `flow validate` nor the run reports either of these:
+- If Action Center can't resolve the group when it creates the task (for example, the group has no role in the task's folder), the task is created `Unassigned` and the group's members never see it.
+- If it resolves, the task goes to "All users in group" (`TaskAssignmentCriteria: "AllUsers"`). The Action Center web UI then opens the quick form read-only for every member: Approve and Reject are disabled and there is no Claim button. A quick form is editable only for the one user it is assigned to (observed on Action Center 26.10).
+
+When any member of a group should be able to approve, route the task to one person (`uip tasks assign <TASK_ID> --user <EMAIL>`), or leave it `Unassigned` (`uip tasks unassign <TASK_ID>`) so a member picks it up with **Assign to self**. Read the task with `uip tasks get <TASK_ID> --output json` and check `Status`, `TaskAssignmentCriteria` and `AssignedToUser` before reporting it ready.
 
 ---
 
