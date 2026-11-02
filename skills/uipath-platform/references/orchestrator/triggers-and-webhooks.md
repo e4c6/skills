@@ -96,6 +96,8 @@ uip or triggers create --type queue \
 
 Additional options: `--items-per-job` (default 1), `--activate-on-complete` (re-trigger on job completion).
 
+> **On a Maestro Flow process, a queue trigger starts the job without the item.** The Flow's trigger output is `null`, so the Flow (or a Coded Function it calls) must take the next item from the queue itself and set its result. The trigger fires only for items added after it is enabled.
+
 ### API Trigger
 
 ```bash
